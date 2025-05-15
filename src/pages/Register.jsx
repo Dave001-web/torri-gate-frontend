@@ -8,14 +8,13 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { PiWarningCircle } from "react-icons/pi";
 import { registerSchema } from "../utils/formValidator";
 import { axiosInstance } from "../utils/axiosInstance";
-import { FaArrowLeft } from "react-icons/fa6";
 
 const Register = () => {
   const [role, setRole] = useState("tenant");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const redirect = useNavigate();
 
   const {
@@ -25,20 +24,23 @@ const Register = () => {
   } = useForm({ resolver: yupResolver(registerSchema) });
 
   const handleRegister = async (data) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     try {
-      //console.log("Login Data:", { ...data, role });
-      const response = await axiosInstance.post("/auth/register", {...data, role,})
-      if(response.status === 201){
-        localStorage.setItem("email", data.email)
-        redirect("/verification")
+      // console.log("Login Data:", { ...data, role });
+      const response = await axiosInstance.post("/auth/register", {
+        ...data,
+        role,
+      });
+      if (response.status === 201) {
+        localStorage.setItem("email", data.email);
+        redirect("/verification");
         // store users mail
-      } 
+      }
     } catch (error) {
+      setErrorMessage(error?.response?.data?.message);
       console.log(error);
-      setErrorMessage(error?. response?.data?.message)
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   };
 
@@ -91,20 +93,22 @@ const Register = () => {
         {/* Name */}
         <div className="mt-7">
           <label
-            htmlFor="name"
+            htmlFor="fullName"
             className="font-medium text-[16px] mb-1.5 block"
           >
             Name <sup className="text-red-500">*</sup>
           </label>
           <input
             type="text"
-            id="name"
+            id="fullName"
             {...register("fullName")}
             className="input w-full rounded-lg border border-[#d9d9d9] h-[56px] text-[16px]"
             placeholder="Enter Full Name"
           />
           {errors.fullName && (
-            <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.fullName.message}
+            </p>
           )}
         </div>
 
@@ -131,20 +135,22 @@ const Register = () => {
         {/* Phone */}
         <div className="mt-5">
           <label
-            htmlFor="phone"
+            htmlFor="phoneNumber"
             className="font-medium text-[16px] mb-1.5 block"
           >
             Phone Number <sup className="text-red-500">*</sup>
           </label>
           <input
             type="text"
-            id="phone"
+            id="phoneNumber"
             {...register("phoneNumber")}
             className="input w-full rounded-lg border border-[#d9d9d9] h-[56px] text-[16px]"
-            placeholder="Enter Phone Number"
+            placeholder="Enter Phone Number (+234)"
           />
           {errors.phoneNumber && (
-            <p className="text-red-500 text-sm mt-1">{errors.phoneNumber.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.phoneNumber.message}
+            </p>
           )}
         </div>
 
@@ -210,8 +216,11 @@ const Register = () => {
           </div>
         )}
         {/* Submit */}
-        <button disabled={isSubmitting} className="btn w-full h-[56px] rounded-lg bg-black text-white block mt-6">
-          {isSubmitting ? "Registering...." : "Register"}
+        <button
+          disabled={isSubmitting}
+          className="btn w-full h-[56px] rounded-lg bg-black text-white block mt-6"
+        >
+          {isSubmitting ? "Registering..." : "Register"}
         </button>
 
         {/* Link to login */}
