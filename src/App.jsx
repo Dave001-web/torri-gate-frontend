@@ -45,7 +45,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/check-your-email" element={<CheckYourEmail />} />
-
+          
           <Route element={<ProtectedRoute allowedRoles={["landlord"]} />}>
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
