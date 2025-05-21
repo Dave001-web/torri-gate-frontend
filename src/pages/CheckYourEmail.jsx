@@ -32,20 +32,8 @@ const CheckYourEmail = () => {
             <span className="font-[700]">olafarid12@gmail.com</span> for
             instructions to reset your password.
           </p>
-
-          <button
-            className="btn font-[600] text-[16px] text-center text-[#000000] border-[0.8px] border-[#D9D9D9] rounded-[12px] lg:w-[400px] mx-auto w-full  h-[56px] mt-[20px]"
-            onClick={handlePasswordReset}
-            type="button"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <span className="loading loading-spinner loading-md text-black"></span>
-            ) : (
-              "Resend mail"
-            )}
-          </button>
         </div>
+        <Link to="/forgot-password" className="font-semibold w-full mt-2.5 btn btn-active text-black">Didn't get a link, resend mail</Link>
       </div>
     </AuthWrapper>
   );
