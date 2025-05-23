@@ -6,20 +6,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import {useAppContext} from "../hooks/useAppContext";
+
 const phone_regex = /^\+234[789][01]\d{8}$/;
 
 const validationSchema = yup.object().shape({
   fullName: yup.string().required("Enter Your Full Name"),
-  email: yup
-    .string()
-    .email("Invalid email address")
-    .required("Email is required"),
   tel1: yup
     .string()
     .matches(phone_regex, "phone number must be +234 and valid"),
-  tel2: yup
-    .string()
-    .matches(phone_regex, "phone number must be +234 and valid "),
 });
 
 const Profile = () => {
@@ -32,7 +27,7 @@ const Profile = () => {
     resolver: yupResolver(validationSchema),
   });
   const [isEditable, setIsEditable] = useState(false);
-
+  const {user} = useAppContext ()
   const handleClick = () => {
     setIsEditable(true);
   };
@@ -57,11 +52,11 @@ const Profile = () => {
         </div>
         <form
           onSubmit={handleSubmit(login)}
-          className="mx-auto xl:w-[804px] w-full p-3 bg-white mt-3 mb-7 shadow-lg rounded-lg"
+          className="mx-auto lg:w-[804px] w-full p-3 bg-white mt-3 mb-7 shadow-lg rounded-lg"
         >
           <div className="lg:flex-row flex justify-between flex-col ">
             <img
-              src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29ufGVufDB8fDB8fHww"
+              src={user.profilePicture}
               alt="girl picture"
               className="h-[140px] w-[142px] rounded-full object-cover"
             />
@@ -84,9 +79,9 @@ const Profile = () => {
             </label>
             <input
               type="text"
-              placeholder="Farid Ahmed"
+              placeholder={user.fullName}
               className={`bg-[#fbfbfb] w-full h-[45px] text-black px-2 outline-0  ${
-                errors.fullName ? "border border-red-500" : ""
+                errors.fullName ? "border border-red-500" : "border border-[#f6f6f6]"
               }`}
               {...register("fullName")}
               readOnly={!isEditable}
@@ -102,16 +97,11 @@ const Profile = () => {
             </label>
             <input
               type="email"
-              placeholder="olafarid12@gmail.com"
-              className={`bg-[#fbfbfb] w-full h-[45px]  text-black px-2 outline-0 ${
-                errors.email ? "border border-red-500" : ""
-              }`}
-              {...register("email")}
-              readOnly={!isEditable}
+              placeholder={user.email}
+              className={`bg-[#fbfbfb] w-full h-[45px]  text-black px-2 outline-0 rounded-lg border border-[#f6f6f6]`}
+              readOnly 
             />
-            <p className="text-red-500">
-              {errors.email && errors.email.message}
-            </p>
+            
           </div>
 
           <div className="my-[20px] mx-3">
@@ -120,9 +110,9 @@ const Profile = () => {
             </label>
             <input
               type="tel"
-              placeholder="+234 902 573 0919"
-              className={`bg-[#fbfbfb] w-full h-[45px]  text-black px-2 outline-0 ${
-                errors.tel1 ? "border border-red-500" : ""
+              placeholder={user.phoneNumber}
+              className={`bg-[#fbfbfb] w-full h-[45px]  text-black px-2 outline-0 rounded-lg ${
+                errors.tel1 ? "border border-red-500" : "border border-[#f6f6f6]"
               }`}
               {...register("tel1")}
               readOnly={!isEditable}
@@ -130,30 +120,24 @@ const Profile = () => {
             <p className="text-red-500">{errors.tel1 && errors.tel1.message}</p>
           </div>
 
-          <div className="my-[20px] mx-3">
-            <label htmlFor="phone2" className="block text-black text-[14px]">
-              Phone Number2
-            </label>
-            <input
-              type="tel"
-              placeholder="--------"
-              className={`bg-[#fbfbfb] w-full h-[45px]  text-black px-2 outline-0 ${
-                errors.tel2 ? "border border-red-500" : ""
-              }`}
-              {...register("tel2")}
-              readOnly={!isEditable}
-            />
-            {errors.tel2 && (
-              <p className="text-red-500">{errors.tel2.message}</p>
-            )}
-          </div>
           {isEditable && (
-            <button
-              type="submit"
-              className="mt-4 bg-black text-white py-2 px-4 rounded"
-            >
-              Save Changes
-            </button>
+            <div className="flex-gap-2 items-center">
+              <button
+                type="submit"
+                className="mt-4 bg-black text-white py-2 px-4 rounded"
+              >
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => {setIsEditable(false) 
+                  reset();
+                }}
+                className="mt-4 bg-black text-white py-2 px-4 rounded"
+              >
+                Save Changes
+              </button>
+            </div>
           )}
         </form>
       </div>
