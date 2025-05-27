@@ -15,7 +15,7 @@ const CreateForm = () => {
   } = useForm({
     resolver: yupResolver(propertySchema),
   });
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [imagePreviews, setImagePreviews] = useState(Array(6).fill(null));
   const [images, setImages] = useState(Array(6).fill(null)); // will store actual File objects
 
@@ -61,15 +61,15 @@ const CreateForm = () => {
           <label className="mylabel">Property name</label>
           <input
             type="text"
-            {...register("propertyName")}
+            {...register("title")}
             placeholder="Enter property name"
             className={`myinput ${
-              errors.propertyName ? "border-red-500" : "border-[#f6f6f6]"
+              errors.title ? "border-red-500" : "border-[#f6f6f6]"
             }`}
           />
-          {errors.propertyName && (
+          {errors.title && (
             <p className="text-red-500 text-sm mt-1">
-              {errors.propertyName.message}
+              {errors.title.message}
             </p>
           )}
         </div>
@@ -115,18 +115,18 @@ const CreateForm = () => {
           <label className="mylabel">Facilities</label>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="mylabel">Room</label>
+              <label className="mylabel">Bedroom</label>
               <input
                 type="number"
                 {...register("rooms")}
                 placeholder="Enter number"
                 className={`myinput ${
-                  errors.rooms ? "border-red-500" : "border-[#f6f6f6]"
+                  errors.bedroom ? "border-red-500" : "border-[#f6f6f6]"
                 }`}
               />
-              {errors.rooms && (
+              {errors.bedroom && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.rooms.message}
+                  {errors.bedroom.message}
                 </p>
               )}
             </div>
@@ -137,12 +137,12 @@ const CreateForm = () => {
                 {...register("livingRooms")}
                 placeholder="Enter number"
                 className={`myinput ${
-                  errors.livingRooms ? "border-red-500" : "border-[#f6f6f6]"
+                  errors.livingRoom ? "border-red-500" : "border-[#f6f6f6]"
                 }`}
               />
-              {errors.livingRooms && (
+              {errors.livingRoom && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.livingRooms.message}
+                  {errors.livingRoom.message}
                 </p>
               )}
             </div>
@@ -153,12 +153,12 @@ const CreateForm = () => {
                 {...register("toilets")}
                 placeholder="Enter number"
                 className={`myinput ${
-                  errors.toilets ? "border-red-500" : "border-[#f6f6f6]"
+                  errors.toilet ? "border-red-500" : "border-[#f6f6f6]"
                 }`}
               />
-              {errors.toilets && (
+              {errors.toilet && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.toilets.message}
+                  {errors.toilet.message}
                 </p>
               )}
             </div>
@@ -169,12 +169,12 @@ const CreateForm = () => {
                 {...register("kitchens")}
                 placeholder="Enter number"
                 className={`myinput ${
-                  errors.kitchens ? "border-red-500" : "border-[#f6f6f6]"
+                  errors.kitchen ? "border-red-500" : "border-[#f6f6f6]"
                 }`}
               />
-              {errors.kitchens && (
+              {errors.kitchen && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.kitchens.message}
+                  {errors.kitchen.message}
                 </p>
               )}
             </div>
