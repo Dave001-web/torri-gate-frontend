@@ -5,20 +5,18 @@ import { TbToolsKitchen } from "react-icons/tb";
 
 const PropertyCard = ({
   _id,
-  image,
+  images,
   title,
   kitchen,
-  bedrooms,
-  bathrooms,
-  tag,
+  bedroom,
+  toilet,
   price,
   address,
-  status,
 }) => {
   return (
     <div className="w-[295.4px] h-[317px] mt-6">
       <img
-        src={image}
+        src={images}
         alt="image"
         className="w-full h-[203px] rounded-[10px]"
       />
@@ -33,10 +31,10 @@ const PropertyCard = ({
         <p className="text-[#666666] text-[14px] font-[500]">{address}</p>
         <div className="flex items-center gap-[22px] text-[#363636] text-sm flex-wrap mt-1">
           <p className="flex items-center gap-2">
-            <LiaBedSolid /> {bedrooms} Beds
+            <LiaBedSolid /> {bedroom} Beds
           </p>
           <p className="flex items-center gap-2">
-            <MdOutlineBathtub /> {bathrooms} Baths
+            <MdOutlineBathtub /> {toilet} Baths
           </p>
           <p className="flex items-center gap-2">
             <TbToolsKitchen /> {kitchen} Kitchen
