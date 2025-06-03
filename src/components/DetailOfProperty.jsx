@@ -23,7 +23,7 @@ const dummyImages = [
   "https://plus.unsplash.com/premium_photo-1661876449499-26de7959878f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGhvdXNlfGVufDB8fDB8fHww",
 ];
 
-const DetailOfProperty = ({property}) => {
+const DetailOfProperty = ({ property }) => {
   const [current, setCurrent] = useState(0);
   const [images, setImages] = useState([...property.images]);
 
@@ -69,7 +69,7 @@ const DetailOfProperty = ({property}) => {
           <p className="flex items-center text-[16px] text-[#666] mb-3">
             <FaMapMarkerAlt className="mr-1" /> {property.location}
           </p>
-          <p className="text-[16px] text-[#666]"> {property.description} </p>
+          <p className="text-[16px] text-[#666]">{property.description}</p>
           <p className="text-[16px] text-[#666] mb-2">
             At Torii Gate, we believe finding your perfect home should be easy
             and exciting. Founded to transform the homebuying experience, we
@@ -82,7 +82,7 @@ const DetailOfProperty = ({property}) => {
           {/* Facilities */}
           <div className="mt-3">
             <h3 className="font-medium mb-2 text-lg">Facilities</h3>
-            <div className="grid gird-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 text-sm">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 text-sm">
               <div className="flex items-center gap-2.5">
                 <div className="bg-[#fbfbfb] h-[46px] w-[46px] rounded-lg border border-[#d9d9d9] flex items-center justify-center">
                   <FaCouch size={22} />
@@ -91,7 +91,9 @@ const DetailOfProperty = ({property}) => {
                   <h1 className="text-[#666] text-sm font-medium">
                     Living Room
                   </h1>
-                  <span className="font-semibold text-lg">{property.livingRoom}</span>
+                  <span className="font-semibold text-lg">
+                    {property.livingRoom}
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-2.5">
@@ -100,7 +102,9 @@ const DetailOfProperty = ({property}) => {
                 </div>
                 <div>
                   <h1 className="text-[#666] text-sm font-medium">Bedrooms</h1>
-                  <span className="font-semibold text-lg">{property.bedRoom}</span>
+                  <span className="font-semibold text-lg">
+                    {property.bedroom}
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-2.5">
@@ -109,7 +113,9 @@ const DetailOfProperty = ({property}) => {
                 </div>
                 <div>
                   <h1 className="text-[#666] text-sm font-medium">Kitchen</h1>
-                  <span className="font-semibold text-lg">{property.Kitchen}</span>
+                  <span className="font-semibold text-lg">
+                    {property.kitchen}
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-2.5">
@@ -118,7 +124,9 @@ const DetailOfProperty = ({property}) => {
                 </div>
                 <div>
                   <h1 className="text-[#666] text-sm font-medium">Toilet</h1>
-                  <span className="font-semibold text-lg">{property.toilet}</span>
+                  <span className="font-semibold text-lg">
+                    {property.toilet}
+                  </span>
                 </div>
               </div>
             </div>
@@ -131,7 +139,7 @@ const DetailOfProperty = ({property}) => {
             House owner
           </h1>
 
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-end flex-wrap gap-3">
             <div className="flex gap-2 items-center">
               <img
                 src={property.landlord.profilePicture}

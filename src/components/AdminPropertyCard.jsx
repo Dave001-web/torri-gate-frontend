@@ -6,6 +6,7 @@ import { TbToolsKitchen } from "react-icons/tb";
 import { FaEllipsis } from "react-icons/fa6";
 import { axiosInstance } from "../utils/axiosInstance";
 import { useAppContext } from "../hooks/useAppContext";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import {toast} from "react-toastify";
 
 const AdminPropertyCard = ({
@@ -82,9 +83,14 @@ const AdminPropertyCard = ({
       </div>
 
       <div className="flex flex-col gap-[22px] items-end relative">
+        <div className="flex items-center gap-2">
+          <button className="cursor-pointer">
+            <RiDeleteBin6Line />
+          </button>
         <button onClick={toggleDropdown} className="cursor-pointer">
           <FaEllipsis />
         </button>
+        </div>
 
         {showDropdown && (
           <div className="absolute top-8 right-0 bg-white border rounded-md shadow-md z-10">
