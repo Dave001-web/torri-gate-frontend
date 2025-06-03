@@ -1,19 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../components/layout/Nav";
 import Footer from "../components/layout/Footer";
 import SuspenseLoader from "../components/SuspenseLoader";
 import OtherPropertyFromOwner from "../components/OtherPropertyFromOwner";
 import SimilarProperty from "../components/SimilarProperty";
 import DetailOfProperty from "../components/DetailOfProperty";
+import { axiosInstance } from "../utils/axiosInstance";
+import {useAppContext} from "../hooks/useAppContext";
 
 const PropertyDetail = () => {
+  const {propertyId} = useParams();
+  const [IsLoading, setIsLoading] = React.useState(true);
+  const [property, setProperty] = React.useState();
+  const [more, setMore] = useState([]);
+  const [similar, setSimilar] = useState([]);
+  const [landlord, setLandlord] = useState("");
+  const { token } = useAppContext();
+
+  const fetchPropertyDetails = async () => {
+    setIsLoading(true); 
+    try {
+      const {data} = await axiosInstance.get(`/property/${propertyId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(data); 
+    setProperty(data.property);
+    setMore(data.moreFromLandlord);
+    setSimilar(data.SimilarProperty);
+    setLandlord(data.landlord);
+    setLandlord(data.landlord.name);
+    setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchPropertyDetails();
+  }, [propertyId]);
+
   return (
     <div>
       <Nav bg={"bg-black"} />
-      <DetailOfProperty />
-
-      <OtherPropertyFromOwner />
-      <SimilarProperty />
+      {IsLoading ? 
+        <suspenseLoader />
+       : 
+        <>
+          <DetailOfProperty property= {property} />
+          {more.length > 0 && <OtherPropertyFromOwner more= {more} landlord= {landlord} />}
+          {similar.length > 0 && <SimilarProperty similar={similar}/>}
+        </>
+      }
       <Footer />
     </div>
   );
