@@ -1,26 +1,33 @@
-import { createContext, useEffect } from "react";
-import { useAppContext } from "../hooks/useAppContext";
+import { createContext, useState } from "react";
 import { axiosInstance } from "../utils/axiosInstance";
-export const TenantContext = createContext()
+import { useAppContext } from "../hooks/useAppContext";
+import { useEffect } from "react";
 
-const TenantProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [page, setPage] = useState(1);
+export const TenantContext = createContext();
+
+const Tenantprovider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [properties, setProperties] = useState([]);
+  const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const {token} = useAppContext();
-  const [locValue, setLocValue] = useState('')
-  const [budget, setBudget] = useState('');
-  const [type, setType] = useState('');
+  const { token } = useAppContext();
+  const [locValue, setLocValue] = useState("");
+  const [budget, setBudget] = useState("");
+  const [type, setType] = useState("");
+
+  //api call
 
   const fetchProperties = async () => {
-    if(token) {
+    if (token) {
       try {
-        setIsLoading(true); 
-        const { data } = await axiosInstance.get(`/property?page=${page}&location=${locValue}&budget=${budget}&type=${type}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        setIsLoading(true);
+        const { data } = await axiosInstance.get(
+          `/property?page=${page}&location=${locValue}&budget=${budget}&type=${type}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setProperties(data.properties);
         setPage(data.currentPage);
         setTotalPage(data.totalPages);
@@ -30,32 +37,37 @@ const TenantProvider = ({ children }) => {
         console.log(error);
       }
     }
-  }
-   
+  };
+
   useEffect(() => {
-    fetchProperties()
-  },[token, page, locValue])
+    fetchProperties();
+  }, [token, page, locValue, budget, type]);
 
   const resetFilters = () => {
-    setLocValue("");
     setPage(1);
+    setLocValue("");
     setBudget("");
     setType("");
-  }
-  
-  return <TenantContext.Provider value={{
-    isLoading,
-     properties, 
-     page, 
-     setPage, 
-     totalPage, 
-     total, 
-     setLocValue, 
-     resetFilters, 
-     setBudget, 
-     setType
-  }}>
+  };
+
+  return (
+    <TenantContext.Provider
+      value={{
+        isLoading,
+        properties,
+        page,
+        setPage,
+        totalPage,
+        total,
+        setLocValue,
+        resetFilters,
+        setBudget,
+        setType,
+      }}
+    >
       {children}
     </TenantContext.Provider>
-}
-export default TenantProvider
+  );
+};
+
+export default Tenantprovider;
